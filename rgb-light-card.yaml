@@ -1,0 +1,60 @@
+#
+type: entities
+show_header_toggle: false
+entities:
+  - entity: light.wolke_lilly_wolke_lilly
+    name: Wolke Lilly
+  - type: custom:rgb-light-card
+    entity: light.wolke_lilly_wolke_lilly
+    colors:
+      - color_name: lime
+        brightness_pct: 40
+        transition: 2
+      - color_name: orange
+        brightness_pct: 40
+        transition: 2
+      - color_name: crimson
+        brightness_pct: 40
+        transition: 2
+      - color_name: hotpink
+        brightness_pct: 40
+        transition: 2
+      - color_name: mediumvioletred
+        brightness_pct: 40
+      - color_name: purple
+        brightness_pct: 40
+        transition: 2
+      - color_name: royalblue
+        brightness_pct: 40
+        transition: 2
+      - color_name: blue
+        brightness_pct: 40
+        transition: 2
+  - entity: light.wolke_jonas_wolke_jonas
+    name: Wolke Jonas
+  - type: custom:rgb-light-card
+    entity: light.wolke_jonas_wolke_jonas
+    colors:
+      - color_name: lime
+        brightness_pct: 40
+        transition: 2
+      - color_name: orange
+        brightness_pct: 40
+        transition: 2
+      - color_name: crimson
+        brightness_pct: 40
+        transition: 2
+      - color_name: hotpink
+        brightness_pct: 40
+        transition: 2
+      - color_name: mediumvioletred
+        brightness_pct: 40
+      - color_name: purple
+        brightness_pct: 40
+        transition: 2
+      - color_name: royalblue
+        brightness_pct: 40
+        transition: 2
+      - color_name: blue
+        brightness_pct: 40
+        transition: 2
