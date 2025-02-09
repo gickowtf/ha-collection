@@ -1,7 +1,7 @@
 blueprint:
   name: 🚶‍♂️💡 Bewegungsmelder Außenlicht
   description:  |
-    <h3>🌟 Features:</h3>
+    <h3>🌟 Features</h3>
 
     <ul>
       <li>🚶‍♂️ <b>Bewegungsgesteuertes Licht</b> mit Helligkeits- und Zeitsteuerung</li>
@@ -14,7 +14,7 @@ blueprint:
 
     <hr>
 
-    <h3>🔄 Changelog:</h3>
+    <h3>🔄 Changelog</h3>
 
     <ul>
       <li><b>1.0</b> → Erste Version mit vollständiger Steuerung für Bewegung, Helligkeit & Tageszeiten</li>
