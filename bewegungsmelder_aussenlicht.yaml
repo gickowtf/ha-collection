@@ -1,11 +1,33 @@
 blueprint:
   name: 🚶‍♂️💡 Bewegungsmelder Außenlicht
   description: >-
-    🌙 Intelligente Außenlicht-Steuerung basierend auf Bewegung, Tageszeit & Helligkeitssensor:
-    - ⏳ **Vor 22 Uhr** → 🔆 **100% Helligkeit bei Bewegung**, 🌙 **20% bei keiner Bewegung**
-    - 🕙 **Nach 22 Uhr** → 🔅 **50% Helligkeit bei Bewegung**, ⛔ **Licht aus ohne Bewegung**
-    - 🌅 **30 Min nach Sonnenuntergang** → 🌙 **Licht auf 20%**
-    - 🌞 **Tagsüber (ab 30 Min nach Sonnenaufgang)** → 🚫 **Kein Licht durch Bewegung**
+    <div>
+      <h2>🚶‍♂️💡 Bewegungsmelder Außenlicht</h2>
+    </div>
+    <br>
+
+    ---
+
+    ### 🌟 Features:
+
+    > 🚶‍♂️ **Bewegungsgesteuertes Licht** mit Helligkeits- und Zeitsteuerung  
+
+    > 🌞 **Tagsüber (30 Min nach Sonnenaufgang)** → 🚫 Kein Licht durch Bewegung  
+
+    > 🌙 **Vor 22 Uhr** → 🔆 100% Helligkeit bei Bewegung, 🌙 20% bei keiner Bewegung  
+
+    > 🕙 **Nach 22 Uhr** → 🔅 50% Helligkeit bei Bewegung, ⛔ Licht aus ohne Bewegung  
+
+    > ⏳ **30 Min nach Sonnenuntergang** → 🌙 Licht auf 20%  
+
+    > 📊 **Helligkeitssensor (Lux-Wert) anpassbar**  
+
+    ---
+
+    ### 🔄 Changelog:
+
+    - **1.0** → Erste Version mit vollständiger Steuerung für Bewegung, Helligkeit & Tageszeiten
+
   domain: automation
   input:
     motion_sensor:
@@ -30,7 +52,7 @@ blueprint:
           device_class: illuminance
     illuminance_threshold:
       name: 🔆 Helligkeitsgrenze (Lux)
-      description: ⏳ **Wird das Licht aktiviert, wenn die Umgebungshelligkeit unter diesen Wert fällt?**
+      description: ⏳ **Wert, unter dem das Licht aktiviert wird.**  
       default: 600
       selector:
         number:
@@ -38,6 +60,7 @@ blueprint:
           max: 5000
           step: 10
           unit_of_measurement: "lx"
+
 
 
 mode: single
