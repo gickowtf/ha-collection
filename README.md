@@ -8,5 +8,4 @@
 | Bild                                          | Code                                       | Repo                                                      | 
 |:----------------------------------------------|:-------------------------------------------|:----------------------------------------------------------|
 | ![RGB-Light-Card.png](img/RGB-Light-Card.png) | [rgb-light-card.yaml](rgb-light-card.yaml) | [RGB Light Card](https://github.com/bokub/rgb-light-card) | 
-| Cell 1                                        | Cell 2                                     | Cell 3                                                    | 
-| Cell 1                                        | Cell 2                                     | Cell 3                                                    | 
+|                                               |                                            |                                                           |  
