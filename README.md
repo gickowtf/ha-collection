@@ -5,7 +5,7 @@
 
 ## Dashboard Examples
 
-| Bild                                          | Code                                       | Repo                                                      | 
-|:----------------------------------------------|:-------------------------------------------|:----------------------------------------------------------|
-| ![RGB-Light-Card.png](img/RGB-Light-Card.png) | [rgb-light-card.yaml](rgb-light-card.yaml) | [RGB Light Card](https://github.com/bokub/rgb-light-card) | 
-|                                               |                                            |                                                           |  
+| Bild                                                                         | Code                                             | Repo                                                      | 
+|:-----------------------------------------------------------------------------|:-------------------------------------------------|:----------------------------------------------------------|
+| ![RGB-Light-Card.png](img/RGB-Light-Card.png)                                | [rgb-light-card.yaml](rgb-light-card.yaml)       | [RGB Light Card](https://github.com/bokub/rgb-light-card) | 
+| ![week-planner-card.png](img/week-planner-card.png)                          | [week-planner-card.md](week-planner-card.md)     |     [week-planner-card](https://github.com/FamousWolf/week-planner-card)                                                      |  [week-planner-card.md](week-planner-card.md)
