@@ -1,32 +1,23 @@
 blueprint:
   name: 🚶‍♂️💡 Bewegungsmelder Außenlicht
-  description: >-
-    <div>
-      <h2>🚶‍♂️💡 Bewegungsmelder Außenlicht</h2>
-    </div>
-    <br>
+  description: >-    <h3>🌟 Features:</h3>
 
-    ---
+    <ul>
+      <li>🚶‍♂️ <b>Bewegungsgesteuertes Licht</b> mit Helligkeits- und Zeitsteuerung</li>
+      <li>🌞 <b>Tagsüber (30 Min nach Sonnenaufgang)</b> → 🚫 Kein Licht durch Bewegung</li>
+      <li>🌙 <b>Vor 22 Uhr</b> → 🔆 100% Helligkeit bei Bewegung, 🌙 20% bei keiner Bewegung</li>
+      <li>🕙 <b>Nach 22 Uhr</b> → 🔅 50% Helligkeit bei Bewegung, ⛔ Licht aus ohne Bewegung</li>
+      <li>⏳ <b>30 Min nach Sonnenuntergang</b> → 🌙 Licht auf 20%</li>
+      <li>📊 <b>Helligkeitssensor (Lux-Wert) anpassbar</b></li>
+    </ul>
 
-    ### 🌟 Features:
+    <hr>
 
-    > 🚶‍♂️ **Bewegungsgesteuertes Licht** mit Helligkeits- und Zeitsteuerung  
+    <h3>🔄 Changelog:</h3>
 
-    > 🌞 **Tagsüber (30 Min nach Sonnenaufgang)** → 🚫 Kein Licht durch Bewegung  
-
-    > 🌙 **Vor 22 Uhr** → 🔆 100% Helligkeit bei Bewegung, 🌙 20% bei keiner Bewegung  
-
-    > 🕙 **Nach 22 Uhr** → 🔅 50% Helligkeit bei Bewegung, ⛔ Licht aus ohne Bewegung  
-
-    > ⏳ **30 Min nach Sonnenuntergang** → 🌙 Licht auf 20%  
-
-    > 📊 **Helligkeitssensor (Lux-Wert) anpassbar**  
-
-    ---
-
-    ### 🔄 Changelog:
-
-    - **1.0** → Erste Version mit vollständiger Steuerung für Bewegung, Helligkeit & Tageszeiten
+    <ul>
+      <li><b>1.0</b> → Erste Version mit vollständiger Steuerung für Bewegung, Helligkeit & Tageszeiten</li>
+    </ul>
 
   domain: automation
   input:
