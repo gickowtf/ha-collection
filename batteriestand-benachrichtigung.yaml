@@ -1,17 +1,17 @@
 blueprint:
-  name: Low battery level detection & notification for all battery sensors
+  name: Erkennung & Benachrichtigung bei niedrigem Batteriestand für alle Batterie-Sensoren
   description: >
-    Regularly test all sensors with 'battery' device-class for crossing a certain 
-    battery level threshold and if so execute an action.
+    Überprüft regelmäßig alle Sensoren mit der Geräteklasse 'battery', ob sie 
+    einen bestimmten Schwellenwert unterschreiten, und führt dann eine Aktion aus.
 
-    Original blueprint: [GitHub Gist](https://gist.github.com/sbyx/1f6f434f0903b872b84c4302637d0890)  
-    This version has been extended to check for the `unit_of_measurement` attribute.
+    Original-Blueprint: [GitHub Gist](https://gist.github.com/sbyx/1f6f434f0903b872b84c4302637d0890)  
+    Diese Version wurde um die Prüfung des `unit_of_measurement`-Attributs erweitert.
   domain: automation
   input:
     threshold:
-      name: Battery warning level threshold
-      description: Battery sensors below threshold are assumed to be low-battery (as
-        well as binary battery sensors with value 'on').
+      name: Schwellenwert für Batteriewarnung
+      description: Batterie-Sensoren unterhalb dieses Wertes werden als schwach angesehen 
+        (ebenso wie binäre Batterie-Sensoren mit dem Wert 'on').
       default: 20
       selector:
         number:
@@ -21,15 +21,14 @@ blueprint:
           mode: slider
           step: 5.0
     time:
-      name: Time to test on
-      description: Test is run at configured time
+      name: Zeitpunkt der Überprüfung
+      description: Die Überprüfung wird zur konfigurierten Zeit durchgeführt.
       default: '10:00:00'
       selector:
         time: {}
     day:
-      name: Weekday to test on
-      description: 'Test is run at configured time either everyday (0) or on a given
-        weekday (1: Monday ... 7: Sunday)'
+      name: Wochentag der Überprüfung
+      description: Die Überprüfung erfolgt entweder täglich (0) oder an einem bestimmten Wochentag (1: Montag ... 7: Sonntag).
       default: 0
       selector:
         number:
@@ -38,20 +37,22 @@ blueprint:
           mode: slider
           step: 1.0
     exclude:
-      name: Excluded Sensors
-      description: Battery sensors (e.g. smartphone) to exclude from detection. Only entities are supported, devices must be expanded!
+      name: Ausgeschlossene Sensoren
+      description: Batterie-Sensoren (z. B. Smartphone), die von der Erkennung ausgeschlossen werden sollen. 
+        Nur Entitäten werden unterstützt, Geräte müssen einzeln ausgewählt werden!
       default: {entity_id: []}
       selector:
         target:
           entity:
             device_class: battery
     actions:
-      name: Actions
-      description: Notifications or similar to be run. {{sensors}} is replaced with
-        the names of sensors being low on battery.
+      name: Aktionen
+      description: Benachrichtigungen oder ähnliche Aktionen, die ausgeführt werden sollen. 
+        {{sensors}} wird durch die Namen der Sensoren mit niedrigem Batteriestand ersetzt.
       selector:
         action: {}
-  source_url: https://github.com/gickowtf/ha-collection/blob/main/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+  source_url: https://github.com/gickowtf/ha-collection/blob/main/batteriestand-benachrichtigung.yaml
+
 variables:
   day: !input 'day'
   threshold: !input 'threshold'
@@ -73,13 +74,17 @@ variables:
         {% set result.sensors = result.sensors + [state.name] %}
       {% endif %}
     {% endfor %}
-    {{ result.sensors | join(', ') }}
+    {{ result.sensors | join('\n') }}
+
 trigger:
 - platform: time
   at: !input 'time'
+
 condition:
 - '{{ sensors != '''' and (day | int == 0 or day | int == now().isoweekday()) }}'
+
 action:
 - choose: []
   default: !input 'actions'
+
 mode: single

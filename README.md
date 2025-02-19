@@ -3,6 +3,12 @@
 ### 🚶‍♂️💡 Bewegungsmelder Außenlicht
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fgickowtf%2Fha-collection%2Fblob%2Fmain%2Fbewegungsmelder_aussenlicht.yaml)
 
+### 🔋⚡️💡 Erkennung & Benachrichtigung bei niedrigem Batteriestand für alle Batterie-Sensoren 📢⚠️
+#### Überprüft regelmäßig alle Sensoren mit der Geräteklasse 'battery', ob sie einen bestimmten Schwellenwert unterschreiten, und führt dann eine Aktion aus.
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fgickowtf%2Fha-collection%2Fblob%2Fmain%2Fbatteriestand-benachrichtigung.yaml)
+
+
+
 ## Dashboard Examples
 
 | Bild                                                                         | Code                                             | Repo                                                      | 
