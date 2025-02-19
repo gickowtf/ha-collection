@@ -27,18 +27,30 @@ blueprint:
       selector:
         time: {}
     day:
-      name: Wochentag der Überprüfung
+      name: Wochentage der Überprüfung
       description: >
-        Die Überprüfung erfolgt entweder täglich (0) oder an einem bestimmten 
-        Wochentag (1: Montag, 2: Dienstag, 3: Mittwoch, 4: Donnerstag, 
-        5: Freitag, 6: Samstag, 7: Sonntag).
-      default: 0
+        Wähle die Wochentage aus, an denen die Überprüfung durchgeführt werden soll.
+        Mehrere Tage können gleichzeitig ausgewählt werden.
+      default: []
       selector:
-        number:
-          min: 0.0
-          max: 7.0
-          mode: slider
-          step: 1.0
+        select:
+          options:
+            - label: Montag
+              value: 1
+            - label: Dienstag
+              value: 2
+            - label: Mittwoch
+              value: 3
+            - label: Donnerstag
+              value: 4
+            - label: Freitag
+              value: 5
+            - label: Samstag
+              value: 6
+            - label: Sonntag
+              value: 7
+          multiple: true
+          mode: list
     exclude:
       name: Ausgeschlossene Sensoren
       description: Batterie-Sensoren (z. B. Smartphone), die von der Erkennung ausgeschlossen werden sollen. 
@@ -84,7 +96,7 @@ trigger:
   at: !input 'time'
 
 condition:
-- '{{ sensors != '''' and (day | int == 0 or day | int == now().isoweekday()) }}'
+- "{{ sensors != '' and (day | select('==', now().isoweekday()) | list | count > 0) }}"
 
 action:
 - choose: []
