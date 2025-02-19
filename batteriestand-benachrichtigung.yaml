@@ -3,9 +3,6 @@ blueprint:
   description: >
     Überprüft regelmäßig alle Sensoren mit der Geräteklasse 'battery', ob sie 
     einen bestimmten Schwellenwert unterschreiten, und führt dann eine Aktion aus.
-
-    Original-Blueprint: [GitHub Gist](https://gist.github.com/sbyx/1f6f434f0903b872b84c4302637d0890)  
-    Diese Version wurde um die Prüfung des `unit_of_measurement`-Attributs erweitert.
   domain: automation
   input:
     threshold:
@@ -66,7 +63,6 @@ blueprint:
         {{sensors}} wird durch die Namen der Sensoren mit niedrigem Batteriestand ersetzt.
       selector:
         action: {}
-  source_url: https://github.com/gickowtf/ha-collection/blob/main/batteriestand-benachrichtigung.yaml
 
 variables:
   day: !input 'day'
