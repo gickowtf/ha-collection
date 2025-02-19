@@ -33,19 +33,19 @@ blueprint:
         select:
           options:
             - label: Montag
-              value: 1
+              value: "1"
             - label: Dienstag
-              value: 2
+              value: "2"
             - label: Mittwoch
-              value: 3
+              value: "3"
             - label: Donnerstag
-              value: 4
+              value: "4"
             - label: Freitag
-              value: 5
+              value: "5"
             - label: Samstag
-              value: 6
+              value: "6"
             - label: Sonntag
-              value: 7
+              value: "7"
           multiple: true
           mode: list
     exclude:
@@ -92,7 +92,7 @@ trigger:
   at: !input 'time'
 
 condition:
-- "{{ sensors != '' and (day | select('==', now().isoweekday()) | list | count > 0) }}"
+- "{{ sensors != '' and (now().isoweekday() | string) in day }}"
 
 action:
 - choose: []
