@@ -1,11 +1,6 @@
 blueprint:
-  name: Fortgeschrittener benutzerdefinierter Bewegungssensor (überarbeitet)
-  description:
-    "- Möglichkeit, eine Lichtszene auszuwählen, um zu definieren, wie die Lichter leuchten sollen.\n
-    - Lux-Wert.\n
-    - Wartezeit in 10er Schritten, mit der Möglichkeit zur genauen Eingabe.\n
-    - Zeitfelder für Lichtaktivierung und Ambient-Szene.\n
-    - Möglichkeit, eine Blockdauer für den Automationsblocker festzulegen.\n"
+  name: Fortgeschrittener benutzerdefinierter Bewegungssensor
+  description: Dieser Bewegungssensor basiert auf mehreren Ideen
   domain: automation
   input:
     motion_entity:
