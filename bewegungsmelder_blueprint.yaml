@@ -82,7 +82,7 @@ blueprint:
         entity: {}
     automation_blocker_boolean:
       name: Automationsblocker-Wahl (Optional)
-      description: "Gewünschter Zustand des Automationsblockers – wähle 'on' für aktiv (Licht bleibt aus) oder 'off' für inaktiv."
+      description: "Gewünschter Zustand des Automationsblockers – wähle 'on' für an und 'off' für aus."
       default: false
       selector:
         boolean: {}
@@ -99,7 +99,7 @@ blueprint:
           step: 10
     motion_off_blocker:
       name: Bewegungs-Aus-Blocker (Optional)
-      description: "Die 'Bewegung aus'-Sequenz (wenn der Sensor von 'on' zu 'off' wechselt) wird nicht ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist."
+      description: "Die 'Bewegung aus'-Sequenz wird nicht ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist."
       default:
       selector:
         entity: {}
@@ -197,14 +197,16 @@ action:
             after: !input time_default_start
             before: !input time_default_end
           - choose:
-              - conditions: "{{ light_scene != '' }}"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ light_scene != '' }}"
                 sequence:
                   - service: scene.turn_on
                     target:
                       entity_id: !input light_scene
-              - default:
-                  - service: light.turn_on
-                    target: !input light_target
+            default:
+              - service: light.turn_on
+                target: !input light_target
       - conditions:
           - condition: template
             value_template: "{{ trigger.to_state.state == 'off' }}"
