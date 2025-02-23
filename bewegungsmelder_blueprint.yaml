@@ -2,6 +2,7 @@ blueprint:
   name: Fortgeschrittener benutzerdefinierter Bewegungssensor
   description:
     "Dieser Bewegungssensor basiert auf mehreren Ideen aus anderen Blueprints und beinhaltet eigene Anpassungen.\n\n
+    \n\n
     Eingaben und Aktionen:\n
     - Schaltet Lichter oder Szenen ein, wenn Bewegung erkannt wird. Der Auslöser kann ein Bewegungssensor oder ein beliebiges Gerät sein, das zwischen 'on' und 'off' wechselt – mehrere Sensoren können verwendet werden.\n
     - Die Aktivierung kann in einem bestimmten Zeitfenster erfolgen (z. B. damit das Badezimmerlicht nicht mitten in der Nacht angeht).\n
