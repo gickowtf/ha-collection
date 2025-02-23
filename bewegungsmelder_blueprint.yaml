@@ -1,16 +1,11 @@
 blueprint:
-  name: Fortgeschrittener benutzerdefinierter Bewegungssensor
+  name: Fortgeschrittener benutzerdefinierter Bewegungssensor (überarbeitet)
   description:
-    "Dieser Bewegungssensor basiert auf mehreren Ideen aus anderen Blueprints und beinhaltet eigene Anpassungen.\n\n
-    \n\n
-    Eingaben und Aktionen:\n
-    - Schaltet Lichter oder Szenen ein, wenn Bewegung erkannt wird. Der Auslöser kann ein Bewegungssensor oder ein beliebiges Gerät sein, das zwischen 'on' und 'off' wechselt – mehrere Sensoren können verwendet werden.\n
-    - Die Aktivierung kann in einem bestimmten Zeitfenster erfolgen (z. B. damit das Badezimmerlicht nicht mitten in der Nacht angeht).\n
-    - Es wird ein Helligkeitswert definiert: Die Automation läuft nur, wenn es dunkler als der angegebene Lux-Wert ist.\n
-    - Sonnenbedingung: Wähle, ob die Aktion immer, nur tagsüber (wenn die Sonne über dem Horizont ist) oder nur nachts (wenn die Sonne unter dem Horizont ist) ausgeführt wird.\n
-    - Wartezeit zum Ausschalten.\n
-    - Optionale Bedingungen: Die Aktion wird nur ausgeführt, wenn bestimmte optionale Entitäten im gewünschten Zustand sind.\n
-    - Es kann eine Standardszene definiert werden, die aktiviert wird, wenn keine Bewegung mehr erkannt wird.\n"
+    "- Möglichkeit, eine Lichtszene auszuwählen, um zu definieren, wie die Lichter leuchten sollen.\n
+    - Lux-Wert.\n
+    - Wartezeit in 10er Schritten, mit der Möglichkeit zur genauen Eingabe.\n
+    - Zeitfelder für Lichtaktivierung und Ambient-Szene.\n
+    - Möglichkeit, eine Blockdauer für den Automationsblocker festzulegen.\n"
   domain: automation
   input:
     motion_entity:
@@ -25,6 +20,14 @@ blueprint:
         target:
           entity:
             domain: light
+    light_scene:
+      name: Lichtszene (Optional)
+      description: "Wähle eine Szene, um zu definieren, wie die ausgewählten Lichter leuchten sollen (z.B. Farbe, Helligkeit)."
+      default: ""
+      selector:
+        entity:
+          domain:
+            - scene
     luminance_sensor:
       name: Helligkeitssensor
       description: Dieser Sensor wird verwendet, um die aktuelle Helligkeit zu messen.
@@ -36,7 +39,7 @@ blueprint:
           multiple: false
     luminance_required:
       name: Benötigter Lux-Wert
-      description: Lux-Wert, unterhalb dessen die Automation ausgeführt wird.
+      description: "Die Automation wird nur ausgeführt, wenn die gemessene Helligkeit unter diesem Wert liegt. Beispiel: 100 lx bedeutet, dass es dunkel genug sein muss."
       default: 100
       selector:
         number:
@@ -45,7 +48,7 @@ blueprint:
           unit_of_measurement: lx
     no_motion_wait:
       name: Wartezeit
-      description: Zeit in Sekunden, die das Licht nach der letzten Bewegung eingeschaltet bleibt.
+      description: "Zeit in Sekunden, die das Licht nach der letzten Bewegung eingeschaltet bleibt. Typische Werte in 10er Schritten (10, 20, 30...), aber auch andere Werte sind möglich."
       default: 120
       selector:
         number:
@@ -53,62 +56,19 @@ blueprint:
           max: 600.0
           unit_of_measurement: seconds
           mode: slider
-          step: 1.0
-    time_default_start:
-      name: Standardszene nur ab dieser Zeit ausführen (Optional)
-      description: Die Standardszene wird nur ausgeführt, wenn die Uhrzeit später als dieser Wert ist.
+          step: 10.0
+    light_activation_time_start:
+      name: Lichtaktivierung ab
+      description: "Die Automation wird nur ausgeführt, wenn die aktuelle Uhrzeit nach diesem Wert liegt."
       default: 00:00:00
       selector:
         time: {}
-    time_default_end:
-      name: Standardszene nur bis zu dieser Zeit ausführen (Optional)
-      description: Die Standardszene wird nur ausgeführt, wenn die Uhrzeit früher als dieser Wert ist.
+    light_activation_time_end:
+      name: Lichtaktivierung bis
+      description: "Die Automation wird nur ausgeführt, wenn die aktuelle Uhrzeit vor diesem Wert liegt."
       default: 00:00:00
       selector:
         time: {}
-    sonnenbedingung:
-      name: Sonnenbedingung
-      description: Wähle, ob die Aktion immer, nur tagsüber (wenn die Sonne über dem Horizont ist) oder nur nachts (wenn die Sonne unter dem Horizont ist) ausgeführt wird.
-      default: Immer
-      selector:
-        select:
-          options:
-            - Immer
-            - Tag
-            - Nacht
-    automation_blocker:
-      name: Automationsblocker (Optional)
-      description: Die Automation wird nur ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist.
-      default:
-      selector:
-        entity: {}
-    automation_blocker_boolean:
-      name: Automationsblocker-Wahl (Optional)
-      description: Gewünschter Zustand des Automationsblockers – wähle "on" für an und "off" für aus.
-      default: false
-      selector:
-        boolean: {}
-    motion_off_blocker:
-      name: Bewegungs-Aus-Blocker (Optional)
-      description: Die "Bewegung aus"-Sequenz (wenn der Sensor von "on" zu "off" wechselt) wird nicht ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist.
-      default:
-      selector:
-        entity: {}
-    motion_off_blocker_boolean:
-      name: Bewegungs-Aus-Wahl (Optional)
-      description: Gewünschter Zustand des Bewegungs-Aus-Blockers.
-      default: false
-      selector:
-        boolean: {}
-    scene_ambient:
-      name: Ambient-Szene (Optional)
-      description: Szene für den Ambient-Zustand, die aktiviert wird, wenn keine Bewegung erkannt wird.
-      default: scene.none
-      selector:
-        entity:
-          domain:
-            - scene
-          multiple: false
     time_scene_ambient_start:
       name: Ambient-Zeitfenster Start (Optional)
       description: Zeit, ab der die Ambient-Szene aktiviert werden kann.
@@ -121,18 +81,68 @@ blueprint:
       default: 00:00:00
       selector:
         time: {}
-mode: restart
-max_exceeded: silent
-variables:
-  scene_ambient: !input scene_ambient
-  automation_blocker: !input automation_blocker
-  automation_blocker_boolean: !input automation_blocker_boolean
-  motion_off_blocker: !input motion_off_blocker
-  motion_off_blocker_boolean: !input motion_off_blocker_boolean
-  sonnenbedingung: !input sonnenbedingung
-  motion_entity: !input motion_entity
-  luminance_sensor: !input luminance_sensor
-  luminance_required: !input luminance_required
+    automation_blocker:
+      name: Automationsblocker (Optional)
+      description: "Die Automation wird nur ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist."
+      default:
+      selector:
+        entity: {}
+    automation_blocker_boolean:
+      name: Automationsblocker-Wahl (Optional)
+      description: "Gewünschter Zustand des Automationsblockers – wähle 'on' für aktiv (Licht bleibt aus) oder 'off' für inaktiv."
+      default: false
+      selector:
+        boolean: {}
+    automation_blocker_duration:
+      name: Blockdauer für Automationsblocker
+      description: "Definiere, wie lange (in Sekunden) die Automation blockiert wird, wenn der Blocker aktiviert ist. Beispiel: 420 Sekunden (7 Minuten)."
+      default: 420
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+          mode: slider
+          step: 10
+    motion_off_blocker:
+      name: Bewegungs-Aus-Blocker (Optional)
+      description: "Die 'Bewegung aus'-Sequenz wird nicht ausgeführt, wenn diese boolesche Entität im gewünschten Zustand ist."
+      default:
+      selector:
+        entity: {}
+    motion_off_blocker_boolean:
+      name: Bewegungs-Aus-Wahl (Optional)
+      description: "Gewünschter Zustand des Bewegungs-Aus-Blockers."
+      default: false
+      selector:
+        boolean: {}
+    scene_ambient:
+      name: Ambient-Szene (Optional)
+      description: "Szene für den Ambient-Zustand, die aktiviert wird, wenn keine Bewegung erkannt wird."
+      default: scene.none
+      selector:
+        entity:
+          domain:
+            - scene
+          multiple: false
+  mode: restart
+  max_exceeded: silent
+  variables:
+    scene_ambient: !input scene_ambient
+    automation_blocker: !input automation_blocker
+    automation_blocker_boolean: !input automation_blocker_boolean
+    automation_blocker_duration: !input automation_blocker_duration
+    motion_off_blocker: !input motion_off_blocker
+    motion_off_blocker_boolean: !input motion_off_blocker_boolean
+    light_scene: !input light_scene
+    light_activation_time_start: !input light_activation_time_start
+    light_activation_time_end: !input light_activation_time_end
+    time_scene_ambient_start: !input time_scene_ambient_start
+    time_scene_ambient_end: !input time_scene_ambient_end
+    sonnenbedingung: !input sonnenbedingung
+    motion_entity: !input motion_entity
+    luminance_sensor: !input luminance_sensor
+    luminance_required: !input luminance_required
 trigger:
   - platform: state
     entity_id: !input motion_entity
@@ -144,11 +154,20 @@ trigger:
     to: "off"
     for: !input no_motion_wait
 condition:
-  - condition: or
-    conditions:
-      - "{{ automation_blocker == none }}"
-      - "{{ automation_blocker_boolean and states[automation_blocker].state == 'on' }}"
-      - "{{ not automation_blocker_boolean and states[automation_blocker].state == 'off' }}"
+  - condition: template
+    value_template: >
+      {% if automation_blocker == none %}
+         true
+      {% else %}
+         {% set desired = automation_blocker_boolean %}
+         {% set blocker = states(automation_blocker) %}
+         {% set elapsed = (as_timestamp(now()) - as_timestamp(blocker.last_changed)) | default(9999) %}
+         {% if desired %}
+           {{ blocker.state == 'on' and elapsed < automation_blocker_duration }}
+         {% else %}
+           {{ blocker.state == 'off' and elapsed < automation_blocker_duration }}
+         {% endif %}
+      {% endif %}
   - condition: template
     value_template: >
       {% if sonnenbedingung == 'Immer' %}
@@ -170,27 +189,44 @@ action:
             below: !input luminance_required
         sequence:
           - condition: time
-            after: !input time_default_start
-            before: !input time_default_end
-          - service: light.turn_on
-            target: !input light_target
+            after: !input light_activation_time_start
+            before: !input light_activation_time_end
+          - choose:
+              - conditions: "{{ light_scene != '' }}"
+                sequence:
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input light_scene
+              - default:
+                  - service: light.turn_on
+                    target: !input light_target
       - conditions:
           - condition: template
             value_template: "{{ trigger.to_state.state == 'off' }}"
-          - condition: or
-            conditions:
-              - "{{ motion_off_blocker == none }}"
-              - "{{ motion_off_blocker_boolean and states[motion_off_blocker].state == 'on' }}"
-              - "{{ not motion_off_blocker_boolean and states[motion_off_blocker].state == 'off' }}"
+          - condition: template
+            value_template: >
+              {% if motion_off_blocker == none %}
+                true
+              {% else %}
+                {% set mob = states(motion_off_blocker) %}
+                {% if motion_off_blocker_boolean %}
+                  {{ mob.state == 'on' }}
+                {% else %}
+                  {{ mob.state == 'off' }}
+                {% endif %}
+              {% endif %}
         sequence:
           - choose:
               - conditions:
-                  - "{{ scene_ambient != 'scene.none' }}"
+                  - condition: template
+                    value_template: "{{ scene_ambient != 'scene.none' }}"
                   - condition: time
                     after: !input time_scene_ambient_start
                     before: !input time_scene_ambient_end
                 sequence:
-                  - scene: !input scene_ambient
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_ambient
             default:
               - service: light.turn_off
                 target: !input light_target
